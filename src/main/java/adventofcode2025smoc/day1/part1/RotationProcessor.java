@@ -1,5 +1,8 @@
 package adventofcode2025smoc.day1.part1;
 
+import adventofcode2025smoc.day1.common.Dial;
+import adventofcode2025smoc.day1.common.Rotation;
+
 import java.util.List;
 
 public class RotationProcessor {

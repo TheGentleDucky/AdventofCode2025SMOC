@@ -1,4 +1,4 @@
-package adventofcode2025smoc.day1.part2;
+package adventofcode2025smoc.day1.common;
 
 public class Rotation {
 

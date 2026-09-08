@@ -1,5 +1,9 @@
 package adventofcode2025smoc.day1.part1;
 
+import adventofcode2025smoc.day1.common.Dial;
+import adventofcode2025smoc.day1.common.Rotation;
+import adventofcode2025smoc.day1.common.RotationParser;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;

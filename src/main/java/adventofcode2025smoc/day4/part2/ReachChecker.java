@@ -13,9 +13,9 @@ public class ReachChecker {
 
         for (int dr = -1; dr <= 1; dr++) {
             for (int dc = -1; dc <= 1; dc++) {
-                if (dr == 0 && dc == 0)
+                if (dr == 0 && dc == 0) {
                     continue;
-
+                   }
                     int nr = i + dr;
                     int nc = j + dc;
 

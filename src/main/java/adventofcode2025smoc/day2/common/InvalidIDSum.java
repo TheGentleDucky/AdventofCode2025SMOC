@@ -1,4 +1,4 @@
-package adventofcode2025smoc.day2.part1;
+package adventofcode2025smoc.day2.common;
 
 import java.util.List;
 

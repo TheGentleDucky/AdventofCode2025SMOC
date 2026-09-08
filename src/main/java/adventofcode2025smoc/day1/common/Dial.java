@@ -1,4 +1,4 @@
-package adventofcode2025smoc.day1.part1;
+package adventofcode2025smoc.day1.common;
 
 public class Dial {
     private static final int MAX_VALUE = 100;

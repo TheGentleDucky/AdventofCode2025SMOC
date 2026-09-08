@@ -1,5 +1,7 @@
 package adventofcode2025smoc.day2.part2;
 
+import adventofcode2025smoc.day2.common.InvalidIDSum;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
