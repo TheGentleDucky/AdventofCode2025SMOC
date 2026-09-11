@@ -1,10 +1,9 @@
-package adventofcode2025smoc.day9.part1;
+package adventofcode2025smoc.day9.part2;
 
 import adventofcode2025smoc.FileProcessor;
 import adventofcode2025smoc.day9.common.RedTile;
 import adventofcode2025smoc.day9.common.TileParser;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
@@ -13,10 +12,10 @@ public class Main {
         TileParser tileParser = new TileParser();
         RectangleCalculator rectangleCalculator = new RectangleCalculator();
 
-        List<String> lines = fileProcessor.readLines("D9_Test.txt").toList();
+        List<String> lines = fileProcessor.readLines("D9_Input.txt").toList();
         List<RedTile> redTiles = tileParser.parse(lines);
 
         long largestArea = rectangleCalculator.calculate(redTiles);
-        System.out.println("Largest area: " + largestArea);
+        System.out.println(largestArea);
     }
 }
