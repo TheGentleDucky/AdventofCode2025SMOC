@@ -24,7 +24,7 @@ public class Main {
             System.out.println("Suma de Id's inválidos = " + total);
 
         } catch (IOException e) {
-            System.err.println("Error en la lectura de Input.txt"+ e.getMessage());
+            System.err.println("Error en la lectura del recurso "+ e.getMessage());
         }
     }
 }

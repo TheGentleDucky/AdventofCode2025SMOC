@@ -7,10 +7,9 @@ public class Main {
     public static void main(String[] args)  {
         BatteryCalculator batteryCalculator = new BatteryCalculator();
         FileProcessor fileProcessor = new FileProcessor();
+        BatteryBankCalculator batteryBankCalculator = new BatteryBankCalculator(batteryCalculator);
 
-        long total = fileProcessor.readLines("D3_Input.txt")
-                .mapToLong(batteryCalculator::calculateMaxVoltage).sum();
-
+        long total = batteryBankCalculator.calculateTotalVoltage(fileProcessor.readLines("D3_Test.txt"));
         System.out.println("Total voltage: " + total);
 
     }
