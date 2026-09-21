@@ -5,8 +5,8 @@ import adventofcode2025smoc.FileProcessor;
 public class Main {
 
     public static void main(String[] args)  {
-        BatteryCalculator batteryCalculator = new BatteryCalculator();
         FileProcessor fileProcessor = new FileProcessor();
+        BatteryCalculator batteryCalculator = new BatteryCalculator();
         BatteryBankCalculator batteryBankCalculator = new BatteryBankCalculator(batteryCalculator);
 
         long total = batteryBankCalculator.calculateTotalVoltage(fileProcessor.readLines("D3_Test.txt"));
