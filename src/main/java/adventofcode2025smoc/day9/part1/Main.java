@@ -4,7 +4,6 @@ import adventofcode2025smoc.FileProcessor;
 import adventofcode2025smoc.day9.common.RedTile;
 import adventofcode2025smoc.day9.common.TileParser;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Main {

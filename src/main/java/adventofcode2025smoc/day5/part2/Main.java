@@ -2,8 +2,6 @@ package adventofcode2025smoc.day5.part2;
 
 import adventofcode2025smoc.FileProcessor;
 
-import java.util.List;
-
 public class Main {
     static void main() {
         FileProcessor fp = new FileProcessor();
