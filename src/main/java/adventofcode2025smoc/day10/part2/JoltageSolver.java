@@ -6,56 +6,67 @@ import adventofcode2025smoc.day10.common.Machine;
 import java.util.*;
 
 public class JoltageSolver {
+    private int minimumPresses;
+
     public int solve(Machine machine) {
         List<Integer> target = machine.joltageRequirements();
-        List<Integer> initialStates = createInitialStates(target.size());
+        minimumPresses = Integer.MAX_VALUE;
+        List<Integer> initialLevels = buildInitialLevels(target.size());
+        search(machine.buttons(), target, 0, initialLevels, 0);
 
-        Queue<JoltageState> queue = new ArrayDeque<>();
-        Set<List<Integer>> visited = new HashSet<>();
+        return minimumPresses;
+    }
 
-        queue.add(new JoltageState(initialStates, 0));
-        visited.add(initialStates);
+    private void search(List<Button> buttons, List<Integer> target, int buttonIndex, List<Integer> levels, int presses) {
+        if (buttonIndex == buttons.size()) {
+            checkSolution(target, levels, presses);
+            return;
+        }
 
-        int exploredStates = 0;
+        Button button = buttons.get(buttonIndex);
+        int maximumPresses = calculateMaxPresses(button, levels, target);
+        for (int count = 0; count < maximumPresses; count++) {
+            int totalPresses = presses + count;
 
-        while (!queue.isEmpty()) {
-            JoltageState current = queue.poll();
-            exploredStates++;
-
-            if (exploredStates % 1000000 == 0){
-                System.out.println("Estados explorados: " + exploredStates);
+            if (totalPresses >= minimumPresses) {
+                break;
             }
-
-            if (current.levels().equals(target)) {
-                return current.presses();
-            }
-            for (Button button : machine.buttons()) {
-                List<Integer> nextState = pressButton(current.levels(), button, target);
-
-                if (nextState != null && visited.add(nextState)) {
-                    queue.add(new JoltageState(nextState, current.presses() + 1));
-                }
+            List<Integer> nextLevels = applyButtons(levels, button, count);
+            search(buttons, target, buttonIndex + 1, nextLevels, totalPresses);
+        }
+    }
+    private int calculateMaxPresses(Button button, List<Integer> levels, List<Integer> target) {
+        if (button.lights().isEmpty()) {
+            return 0;
+        }
+        int maximumPresses = Integer.MAX_VALUE;
+        for (int position : button.lights()){
+            int remaining = target.get(position) - levels.get(position);
+            if (remaining < maximumPresses) {
+                maximumPresses = remaining;
             }
         }
-        return -1;
+        return maximumPresses;
     }
-    private List<Integer> createInitialStates(int size) {
+
+    private List<Integer> buildInitialLevels(int size) {
         List<Integer> levels = new ArrayList<>();
+
         for (int i = 0; i < size; i++) {
             levels.add(0);
         }
         return levels;
     }
-    private List<Integer> pressButton(List<Integer> current, Button button, List<Integer> target) {
-        List<Integer> pressed = new ArrayList<>(current);
-
-        for (int count : button.lights()) {
-            pressed.set(count, pressed.get(count) + 1);
-
-            if (pressed.get(count) > target.get(count)) {
-                return null;
-            }
+    private List<Integer> applyButtons(List<Integer> levels, Button button, int count) {
+        List<Integer> newLevels = new ArrayList<>(levels);
+        for (int position : button.lights()) {
+            newLevels.set(position, levels.get(position) + count);
         }
-        return List.copyOf(pressed);
+        return newLevels;
+    }
+    private void checkSolution(List<Integer> target, List<Integer> levels, int presses) {
+        if (levels.equals(target) && presses < minimumPresses){
+            minimumPresses = presses;
+        }
     }
 }
