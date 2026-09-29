@@ -9,7 +9,7 @@ import adventofcode2025smoc.day10.common.MachineParser;
 import java.util.List;
 
 public class Main {
-    static void main(String[] args) {
+    public static void main(String[] args) {
         FileProcessor fileProcessor = new FileProcessor();
 
         MachineParser machineParser = new MachineParser(new ButtonParser(), new JoltageParser());
@@ -21,7 +21,8 @@ public class Main {
         int minPresses = 0;
 
         for (Machine machine : machines) {
-            minPresses += joltageSolver.solve(machine);
+            int result = joltageSolver.solve(machine);
+            minPresses += result;
         }
         System.out.println("Minimum presses: " + minPresses);
 
