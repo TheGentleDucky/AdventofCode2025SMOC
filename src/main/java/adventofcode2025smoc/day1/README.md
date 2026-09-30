@@ -24,3 +24,18 @@ The important change is that reaching `0` **during** a rotation now matters, not
 The `RotationProcessor` therefore performs every click individually. After each single click, it checks whether the dial is at `0` and immediately increments the counter when necessary.
 
 The `Dial`, `Rotation` and `RotationParser` components are reused; only the processing strategy changes between the two parts.
+
+## Flow diagram
+
+```mermaid
+flowchart TD
+    A[Input rotations] --> B[RotationParser]
+    B --> C[Rotation objects]
+    C --> D{Part 1 or Part 2}
+    D -->|Part 1| E[Rotate dial by full instruction]
+    E --> F[Count positions landing on 0]
+    D -->|Part 2| G[Process one click at a time]
+    G --> H[Count every click landing on 0]
+    F --> I[Password]
+    H --> I
+```
