@@ -29,3 +29,20 @@ The validation has two stages:
 Only rectangles that satisfy these conditions are considered valid. The largest valid area is then returned.
 
 This keeps the same pair-based approach from Part 1 while adding the geometric validation required by Part 2.
+
+## Flow diagram
+
+```mermaid
+flowchart TD
+    A[Red tiles] --> B[TileParser]
+    B --> C[Try every pair of tiles]
+    C --> D[Use pair as rectangle corners]
+    D --> E{Part 1 or Part 2}
+    E -->|Part 1| F[Calculate rectangle area]
+    F --> G[Keep largest area]
+    E -->|Part 2| H[Check rectangle against polygon boundary]
+    H --> I[Check edges and center point]
+    I --> J{Valid rectangle?}
+    J -->|Yes| K[Calculate area]
+    K --> G
+```
