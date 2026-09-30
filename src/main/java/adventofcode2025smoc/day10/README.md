@@ -46,3 +46,26 @@ where each variable represents how many times a button is pressed.
 - **MachineParser** and the common parsers — Convert the input into the mathematical model.
 
 This turns Part 2 from a state-space search into a constrained integer-solution problem.
+
+## Flow diagram
+
+```mermaid
+flowchart TD
+    A[Machine input] --> B[MachineParser]
+    B --> C[Machine: target + buttons + joltage]
+    C --> D{Part 1 or Part 2}
+    D -->|Part 1| E[Try every button combination]
+    E --> F[Toggle affected lights]
+    F --> G{Target reached?}
+    G -->|Yes| H[Keep minimum presses]
+    G -->|No| E
+    D -->|Part 2| I[Build linear system]
+    I --> J[GaussianEliminator]
+    J --> K[Reduced system + pivot/free variables]
+    K --> L[IntegerSolutionFinder]
+    L --> M[Search free-variable values]
+    M --> N[Calculate pivot variables]
+    N --> O{Valid non-negative integer solution?}
+    O -->|Yes| P[Keep minimum presses]
+    O -->|No| M
+```
