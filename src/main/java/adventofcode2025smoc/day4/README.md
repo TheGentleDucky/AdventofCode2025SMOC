@@ -29,3 +29,21 @@ The accessible rolls must now be **removed repeatedly**. Removing a roll can mak
 4. Repeat while at least one roll was removed during the previous pass.
 
 The `Matrix` and `ReachChecker` still provide the grid operations and accessibility rules; Part 2 mainly changes the processing loop so that the grid evolves during the simulation.
+
+## Flow diagram
+
+```mermaid
+flowchart TD
+    A[Input grid] --> B[Matrix]
+    B --> C[Check each roll]
+    C --> D{Fewer than 4 adjacent rolls?}
+    D -->|Yes| E[Roll is accessible]
+    D -->|No| F[Keep roll]
+    E --> G{Part 1 or Part 2}
+    F --> G
+    G -->|Part 1| H[Count accessible rolls]
+    G -->|Part 2| I[Remove accessible rolls]
+    I --> J{Any rolls removed?}
+    J -->|Yes| C
+    J -->|No| K[Total removed]
+```
