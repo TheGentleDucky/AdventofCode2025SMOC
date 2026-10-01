@@ -36,3 +36,25 @@ Before starting the search, the solver also checks whether the total area requir
 - **TreeAreaSolver** — Performs the backtracking search.
 
 The key part of the solution is separating the geometric operations from the search itself: generating orientations and placements is handled independently from deciding which placements form a complete solution.
+
+```mermaid
+flowchart TD
+    A[Input] --> B[TreeAreaParser]
+    B --> C[Shapes + regions]
+    C --> D[ShapeChanger]
+    D --> E[Generate rotations and reflections]
+    E --> F[PlacementGenerator]
+    F --> G[Generate valid placements inside region]
+    G --> H[TreeAreaSolver]
+    H --> I[Check required total area]
+    I --> J[Select most restricted remaining shape]
+    J --> K[Try a placement]
+    K --> L{Fits in TreeSpace?}
+    L -->|No| K
+    L -->|Yes| M[Place shape and recurse]
+    M --> N{All shapes placed?}
+    N -->|Yes| O[Region fits]
+    N -->|No| J
+    M -. dead end .-> P[Backtrack: remove placement]
+    P --> K
+```
