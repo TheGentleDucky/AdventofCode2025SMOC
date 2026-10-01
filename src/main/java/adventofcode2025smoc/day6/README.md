@@ -1,51 +1,73 @@
-#Day 6: Trash Compactor
+# Day 6: Trash Compactor
 
-The input contains a worksheet with several mathematical problems. Each problem consists of a group of numbers and an operator (+ or *).
+The input contains a worksheet with several mathematical problems. Each problem consists of numbers and an operator (`+` or `*`). The main challenge is interpreting the worksheet layout correctly.
 
-The main challenge of the day is not the arithmetic itself, but correctly identifying and interpreting the problems from the worksheet layout.
+## Part 1
 
-Part 1
+In the first part, the problems are read horizontally. Empty columns separate the different problems.
 
-In the first part, each problem is written horizontally. Empty columns are used to separate the different problems.
+`WorksheetParser` identifies the boundaries of each problem and extracts its numbers and operator into a `Problem` object. `ProblemChecker` then performs the required addition or multiplication.
 
-The WorksheetParser scans the worksheet column by column and detects the ranges that belong to each problem. Once a problem has been identified, its numbers and operator are extracted and stored in a Problem object.
+The flow is:
 
-The resulting problems are then passed to ProblemChecker, which performs the corresponding addition or multiplication.
+1. Read the worksheet using `FileProcessor`.
+2. Parse the horizontal problems with `WorksheetParser`.
+3. Create `Problem` objects.
+4. Evaluate each problem with `ProblemChecker`.
+5. Sum all individual results.
 
-The Main class coordinates the process:
+### Main components
 
-Read the input using the common FileProcessor.
-Parse the worksheet into a list of Problem objects.
-Solve each problem using ProblemChecker.
-Sum all the individual results.
-Main components
-Problem — Represents a mathematical problem, containing its numbers and operator.
-WorksheetParser — Detects the individual problems in the worksheet and extracts their numbers and operators.
-ProblemChecker — Evaluates a Problem using either addition or multiplication.
-Main — Coordinates the parsing and calculation process.
-Part 2
+- **Problem** — Represents a mathematical problem with its numbers and operator.
+- **WorksheetParser** — Identifies and parses the horizontal problems.
+- **ProblemChecker** — Performs the addition or multiplication.
+- **Main** — Coordinates the solution.
 
-Part 2 keeps the same overall worksheet structure, but changes how the numbers inside each problem must be interpreted.
+## Part 2
 
-Instead of reading the numbers normally from each row, the digits have to be read vertically from right to left. Each column represents a number, with the digits from top to bottom forming that number.
+Part 2 changes how the numbers are interpreted. Instead of reading them horizontally, the digits must be read **vertically from right to left**. Each column represents one number, with its digits read from top to bottom.
 
-For example, the parser processes the columns of each problem starting from the rightmost column and reconstructs the numbers from their individual digits.
+`WorksheetParser` first identifies the boundaries of each problem. `ProblemParser` then interprets the contents of each problem using the new right-to-left, column-based reading order. The resulting `Problem` objects can still be evaluated by the same `ProblemChecker` used in Part 1.
 
-The separation of responsibilities is slightly different from Part 1. WorksheetParser is still responsible for identifying the boundaries of each problem, but the actual interpretation of the contents is delegated to ProblemParser.
+The flow is:
 
-The flow is therefore:
+1. Read the worksheet using `FileProcessor`.
+2. Identify the individual problems with `WorksheetParser`.
+3. Parse each problem from right to left with `ProblemParser`.
+4. Reconstruct the numbers from their vertical digits.
+5. Evaluate each `Problem` with `ProblemChecker`.
+6. Sum all individual results.
 
-Read the worksheet using FileProcessor.
-WorksheetParser identifies the individual problem ranges.
-ProblemParser reads each problem from right to left and reconstructs its numbers.
-Each problem is represented using the common Problem class.
-ProblemChecker performs the required operation.
-The results of all problems are summed to obtain the final answer.
-Main components
-Problem — Common representation of a mathematical problem, shared by both parts.
-ProblemChecker — Common calculation component that performs addition or multiplication.
-WorksheetParser — Identifies the boundaries of each problem in the worksheet.
-ProblemParser — Specific to Part 2. Reads the digits vertically and from right to left to reconstruct the numbers.
-Main — Coordinates the complete Part 2 process.
+### Main components
 
-The key difficulty in this part is therefore the parsing strategy rather than the arithmetic itself.
+- **Problem** — Common representation shared by both parts.
+- **ProblemChecker** — Common calculation logic for `+` and `*`.
+- **WorksheetParser** — Finds the boundaries of each problem.
+- **ProblemParser** — Specific to Part 2; reconstructs numbers from the vertical columns.
+- **Main** — Coordinates the solution.
+
+## Part 1 vs Part 2
+
+The calculation itself stays the same in both parts. The important change is the **way the worksheet is parsed**:
+
+- **Part 1:** numbers are read horizontally.
+- **Part 2:** numbers are reconstructed vertically, processing columns from right to left.
+
+This allows the two parts to share the `Problem` and `ProblemChecker` components while keeping their parsing strategies separate.
+
+## Flow diagram
+
+```mermaid
+flowchart TD
+    A[Worksheet] --> B{Part 1 or Part 2}
+    B -->|Part 1| C[WorksheetParser]
+    C --> D[Read problems horizontally]
+    D --> E[Problem]
+    B -->|Part 2| F[WorksheetParser]
+    F --> G[ProblemParser]
+    G --> H[Read digits vertically, right to left]
+    H --> E
+    E --> I[ProblemChecker]
+    I --> J[Apply + or *]
+    J --> K[Sum all problem results]
+```
