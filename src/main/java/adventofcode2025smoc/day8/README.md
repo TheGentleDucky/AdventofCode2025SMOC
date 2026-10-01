@@ -27,3 +27,22 @@ The connection process continues until **all junction boxes belong to one circui
 The connections are processed in distance order. As soon as the circuit count reaches one, the connection that caused the final merge is known.
 
 The final answer is calculated by multiplying the **X coordinates** of the two junction boxes involved in that last connection.
+
+## Flow diagram
+
+```mermaid
+flowchart TD
+    A[Junction boxes] --> B[Generate every pair]
+    B --> C[Calculate squared distance]
+    C --> D[Sort connections by distance]
+    D --> E{Part 1 or Part 2}
+    E -->|Part 1| F[Process first required connections]
+    E -->|Part 2| G[Process connections until one circuit remains]
+    F --> H[Union-Find merges circuits]
+    G --> H
+    H --> I[Track circuit sizes]
+    I --> J{Part 1}
+    J -->|Yes| K[Multiply three largest circuits]
+    I --> L{Part 2}
+    L -->|Yes| M[Use final connecting pair]
+```
