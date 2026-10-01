@@ -32,3 +32,16 @@ The merged ranges can then be counted directly using:
 `max - min + 1`
 
 This ensures that IDs covered by several overlapping ranges are only counted once.
+
+## Flow diagram
+
+```mermaid
+flowchart TD
+    A[Input] --> B[InventoryStock parses ranges and ingredients]
+    B --> C{Part 1 or Part 2}
+    C -->|Part 1| D[Check each ingredient against ranges]
+    D --> E[Count fresh ingredients]
+    C -->|Part 2| F[Sort ranges by minimum ID]
+    F --> G[Merge overlapping ranges]
+    G --> H[Count IDs covered by merged ranges]
+```
