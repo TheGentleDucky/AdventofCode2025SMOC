@@ -33,3 +33,25 @@ This is effectively a dynamic-programming approach: paths that reach the same po
 - **TimelineBeamSimulator** — Tracks the number of timelines reaching each column and accumulates them.
 - **GridBuilder** — Provides the grid used by both parts.
 - **Main** — Executes the timeline simulation.
+
+## Flow diagram
+
+```mermaid
+flowchart TD
+    A[Input grid] --> B[GridBuilder]
+    B --> C{Part 1 or Part 2}
+    C -->|Part 1| D[BeamSimulator]
+    D --> E[Move beam row by row]
+    E --> F{Splitter?}
+    F -->|Yes| G[Create left and right beams]
+    F -->|No| H[Continue beam]
+    G --> I[Count split events]
+    H --> I
+    C -->|Part 2| J[TimelineBeamSimulator]
+    J --> K[Track timelines per column]
+    K --> L{Splitter?}
+    L -->|Yes| M[Duplicate timeline count left/right]
+    L -->|No| N[Carry timeline count forward]
+    M --> O[Sum final timeline counts]
+    N --> O
+```
