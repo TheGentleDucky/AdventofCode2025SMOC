@@ -23,3 +23,18 @@ The solution uses a greedy approach. For each position in the resulting 12-digit
 Once the best digit is selected, the search continues from the following position. This produces the maximum possible 12-digit value without having to generate every possible combination.
 
 The `BatteryBankCalculator` continues to handle the aggregation of the results for all banks.
+
+## Flow diagram
+
+```mermaid
+flowchart TD
+    A[Battery banks] --> B[BatteryCalculator]
+    B --> C{Part 1 or Part 2}
+    C -->|Part 1| D[Try every ordered pair]
+    D --> E[Keep maximum 2-digit voltage]
+    C -->|Part 2| F[Select 12 digits greedily]
+    F --> G[Keep order and maximize each position]
+    E --> H[Sum bank results]
+    G --> H
+    H --> I[Total joltage]
+```
