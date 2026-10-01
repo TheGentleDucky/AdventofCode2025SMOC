@@ -32,3 +32,23 @@ Because many different paths can reach the same device with the same pair of fla
 `PathCounter` stores the result for each `PathState` in a memoization map and reuses it whenever the same state is encountered.
 
 This dynamic-programming approach avoids repeatedly traversing identical subgraphs.
+
+## Flow diagram
+
+```mermaid
+flowchart TD
+    A[Device definitions] --> B[DeviceParser]
+    B --> C[Device graph]
+    C --> D{Part 1 or Part 2}
+    D -->|Part 1| E[Recursive path count from start]
+    E --> F{out reached?}
+    F -->|Yes| G[Return 1]
+    F -->|No| H[Sum paths of all outputs]
+    D -->|Part 2| I[Recursive path count with PathState]
+    I --> J[Track dac and fft visited]
+    J --> K[Memoize state result]
+    K --> L{Both visited and out reached?}
+    L -->|Yes| M[Count path]
+    L -->|No| N[Explore outputs]
+    N --> K
+```
