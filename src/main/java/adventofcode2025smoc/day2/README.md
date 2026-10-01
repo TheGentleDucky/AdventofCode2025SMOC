@@ -25,3 +25,18 @@ The solution checks possible chunk sizes and verifies that the complete ID is ma
 For example, a number such as `123123123` can be detected because the sequence `123` is repeated.
 
 The overall flow remains the same: parse the ranges, test every ID, collect the invalid IDs and sum them.
+
+## Flow diagram
+
+```mermaid
+flowchart TD
+    A[Input ranges] --> B[Split ranges]
+    B --> C[Check every ID]
+    C --> D{Invalid pattern?}
+    D -->|No| C
+    D -->|Yes| E[Collect invalid ID]
+    E --> F[Sum invalid IDs]
+
+    C -. Part 1 .-> P1[Two identical halves]
+    C -. Part 2 .-> P2[Repeated chunk of digits]
+```
